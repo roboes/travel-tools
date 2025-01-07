@@ -466,17 +466,17 @@ if (class_exists('WooCommerce') && WC()) {
 
         // Define the start and end times for the event
         $start_time = new DateTime($product_variation_appointment_date . ' ' . $product_variation_appointment_time, new DateTimeZone($timezone));
-        $start_time_str = $start_time->format('Ymd\THis');
+        $start_time_str = $start_time->format('Ymd    His');
 
         // Define the end time
         $end_time = clone $start_time;
         $end_time->modify('+' . $appointment_duration . ' minutes');
-        $end_time_str = $end_time->format('Ymd\THis');
+        $end_time_str = $end_time->format('Ymd    His');
 
         // Set meeting notification
         $calendar_notification_time = clone $start_time;
         $calendar_notification_time->modify('-' . $calendar_notification . ' minutes');
-        $calendar_notification_time_str = $calendar_notification_time->format('Ymd\THis');
+        $calendar_notification_time_str = $calendar_notification_time->format('Ymd    His');
 
         // ICS format content
         $ics_content = "BEGIN:VCALENDAR\n";
