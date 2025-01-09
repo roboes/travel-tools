@@ -1,5 +1,5 @@
 ## Documents Tools
-# Last update: 2024-10-16
+# Last update: 2025-01-08
 
 
 # Start Windows Subsystem for Linux (WSL) (required only on Windows)
@@ -38,6 +38,9 @@ brew update && brew upgrade && brew cleanup
 
 # Install diff-pdf
 # brew install diff-pdf
+
+# Install libreoffice
+# sudo apt install libreoffice
 
 
 # Settings
@@ -81,3 +84,7 @@ pdfimages -raw "./input.pdf" "./output"
 
 # Compare PDFs
 diff-pdf --output-diff=diff.pdf file_A.pdf file_B.pdf
+
+
+# Convert .pdf to .pptx
+soffice --infilter=impress_pdf_import --convert-to ppt "./input.pdf"
