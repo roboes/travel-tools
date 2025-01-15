@@ -1,5 +1,5 @@
 // Google Apps Script - Automatically forwards Gmail emails from specified senders with attachments, applies a label, and ensures they are not marked as spam
-// Last update: 2025-01-09
+// Last update: 2025-01-13
 
 
 // https://script.google.com > New project >
@@ -13,17 +13,21 @@
 
 
 var lastRun = PropertiesService.getScriptProperties().getProperty('lastRun'); // Get last run time
-if (!lastRun) {
-  lastRun = new Date().getTime(); // If this is the first time the script runs, set the time to now
+
+if (!lastRun || isNaN(new Date(parseInt(lastRun)).getTime())) {
+  // If this is the first time the script runs or lastRun is invalid, set the time to now
+  lastRun = new Date().getTime();
   PropertiesService.getScriptProperties().setProperty('lastRun', lastRun); // Save the current timestamp
+} else {
+  // Parse lastRun as an integer (milliseconds since epoch)
+  lastRun = parseInt(lastRun);
 }
 
 function forwardNewEmails() {
-
   // Settings
   var forwardingEmailTo = "email_to@email.com";
   var sendersEmailFrom = ["email_from@email.com"];
-  var labelName = "Label Name"
+  var labelName = "Label Name";
 
   // Search for emails from these senders, with attachments, and received after the last run
   var query = 'from:(' + sendersEmailFrom.join(' OR ') + ') has:attachment after:' + new Date(lastRun).toISOString();

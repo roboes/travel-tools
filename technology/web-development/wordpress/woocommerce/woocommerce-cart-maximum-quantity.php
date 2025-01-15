@@ -24,7 +24,8 @@ if (class_exists('WooCommerce') && WC()) {
     $current_language = (function_exists('pll_current_language') && in_array(pll_current_language('locale'), pll_languages_list(array('fields' => 'locale')))) ? pll_current_language('locale') : 'en_US';
 
     // Function to get error message
-    function get_error_message($max_quantity, $language, $product_name) {
+    function get_error_message($max_quantity, $language, $product_name)
+    {
         if ($language === 'de_DE') {
             return sprintf(__('Ein Warenkorb kann bis zu %d Artikel von "%s" enthalten. Bei besonderen Anfragen, die in unserem Online-Shop nicht aufgeführt sind, kannst du uns gerne kontaktieren.', 'woocommerce'), $max_quantity, $product_name);
         } elseif ($language === 'de_DE_formal') {
@@ -36,7 +37,7 @@ if (class_exists('WooCommerce') && WC()) {
     }
 
     // Add to cart validation
-    add_filter($hook_name = 'woocommerce_add_to_cart_validation', $callback = function($passed, $product_id, $quantity, $variation_id = '', $variations = '') use ($product_quantity_rules, $current_language) {
+    add_filter($hook_name = 'woocommerce_add_to_cart_validation', $callback = function ($passed, $product_id, $quantity, $variation_id = '', $variations = '') use ($product_quantity_rules, $current_language) {
 
         $product = wc_get_product($variation_id ? $variation_id : $product_id);
         $parent_id = $product->get_parent_id();
@@ -89,7 +90,7 @@ if (class_exists('WooCommerce') && WC()) {
     }, $priority = 10, $accepted_args = 5);
 
     // Cart item quantity update validation
-    add_filter($hook_name = 'woocommerce_after_cart_item_quantity_update', $callback = function($cart_item_key, $new_quantity, $old_quantity, $cart) use ($product_quantity_rules, $current_language) {
+    add_filter($hook_name = 'woocommerce_after_cart_item_quantity_update', $callback = function ($cart_item_key, $new_quantity, $old_quantity, $cart) use ($product_quantity_rules, $current_language) {
 
         $product = $cart->cart_contents[$cart_item_key]['data'];
 
